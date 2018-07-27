@@ -3,16 +3,14 @@
 
 /*1)How does agile testing (development) methodology differ from other testing (development) methodologies?*/
 
-Waterfall is a linear approach to software development,whereas Agile is an iterative, team-based approach to development.
+In other testing methodologies the end user gets to see only the product, while in agile, it emphasizes the rapid delivery of an application in complete functional components.
 
-In waterfall the end user gets to see only the product, while in agile, it emphasizes the rapid delivery of an application in complete functional components.
-
-In waterfall all Developers and customers agree on what will be delivered early in the development lifecycle. 
+In other testing methodologies all Developers and customers agree on what will be delivered early in the development lifecycle. 
 
 While in Agile the customer has frequent and early opportunities to see the work being delivered,
 and to make decisions and changes throughout the development project.
 
-In waterfall a customer presence is not strictly required after the requirements phase.
+In other testing methodologies a customer presence is not strictly required after the requirements phase.
 
 In Agile development is often more user-focused, likely a result of more and frequent direction from the customer.
 
