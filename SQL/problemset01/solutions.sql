@@ -86,7 +86,7 @@ record count=(2)
 
 15./*List the average price of a room grouped by city.*/
 
-select avg(r.price) from rooms r join hotel h on h.hotelno=r.hotelno group by city;
+select avg(r.price),city from rooms r join hotel h on h.hotelno=r.hotelno group by city;
 
 record count=(3)
  
