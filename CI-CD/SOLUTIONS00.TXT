@@ -1,0 +1,52 @@
+
+
+/*1.What is an Environment.*/
+It is a collection of hardware and software resources that provides a setup which helps in developement,testing,integration and deployment.
+
+/*2.Name different Environment used in Cigna.*/
+-developement
+-system
+-UAT/PVS
+-integration
+-deployment
+
+/*3.Does different Environment differ. (yes/no with explanation)*/
+No,We need different environments  performing the various processes like developement, testing etc simultaneously but these enviroments on the whole should be similar as it is the same product that is made to go through the processes.
+
+/*4.Kind’s of test based environment we use in Cigna.*/
+-unit
+-integration
+-system
+-uat/pvs
+-maintainance
+
+/*5.What is CI.*/
+Developers practicing continuous integration merge their changes back to the main branch as often as possible. The developer's changes are validated by creating a build and running automated tests against the build. 
+By doing so, you avoid the integration problems that usually happens when people wait for release day to merge their changes into the release branch.
+
+/*6.What is CD.*/
+Continuous delivery is an extension of continuous integration to make sure that you can release new changes to your customers quickly in a sustainable way.
+This means that on top of having automated your testing, you also have automated your release process and you can deploy your application at any point of time by clicking on a button.
+
+/*7.How CI/CD fits in Agile.*/
+Continuous integration is a software development practice that requires team members to integrate their work frequently. Every person integrates at least daily, which leads to multiple integrations each day. 
+Integrations are verified by an automated build that runs regression tests to detect integration errors as quickly as possible.
+Teams find that this approach leads to significantly fewer integration problems and enables development of cohesive software more rapidly.
+Agile is iterative and incremental development practices, where solutions evolve through collaborative development.
+Continuous delivery is an extension of continuous integration to make sure that you can release new changes to your customers quickly in a sustainable way.
+This means that on top of having automated your testing, you also have automated your release process and you can deploy your application at any point of time by clicking on a button.
+At the end of each sprint we try to deliver a working product which relates to continuous delivery.
+
+
+/*8.What do we mean by building and packaging.*/
+Building is converting source file to executable file.
+Packaging is a collection of files.
+
+
+/*9.What is an artifact. */
+Anything that explains a process is an artifact.
+
+/*10.Name some build tools.*/
+-maven
+-gravel
+-ANT
