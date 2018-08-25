@@ -1,0 +1,39 @@
+--ProblemSet2,August 21,2018--
+--submitted by <swathi.b.surseh@accenture.com>
+
+1.Write a valid SQL statement that calculates the total weight of all corn cobs that were picked from the garden:
+select sum(b.weight) from picked b join plant a on a.plantid=b.plantfk  and a.name='Corn';
+
+2.For some reason Erin has change his location for picking the tomato to North. Write the corresponding query.
+update picked set locationFK=(select locationid from location where name='North')where  gardenerFK=(select gardenerid from gardener where name='Erin') and plantFK=(select plantid from plant where name='Tomato');
+
+3.Insert a new column 'Exper' of type Number (30) to the 'gardener' table which stores Experience of the of person. How will you modify this to varchar2(30).
+alter table Gardener add column Exper number(30);
+alter table Gardener modify column (Exper varchar2(30));
+
+4.Write a query to find the plant name which required seeds less than 20 which plant on 14-APR
+select a.name from Plant a join planted b on a.plantid=b.plantFK where date1='14-APR-2012' and seeds<20;
+
+5.List the amount of sunlight and water to all plants with names that start with letter 'c' or letter 'r'.
+select name,sunlight,water from plant  where name like 'C%' or name like'R%';
+
+
+6.Write a valid SQL statement that displays the plant name and the total amount of seed required for each plant that were plant in the garden. The output should be in descending order of plant name.
+select  a.name,sum(b.seeds) from plant a join planted b on a.plantid=b.plantFK group by name  order by  name desc;
+
+7.Write a valid SQL statement that calculates the average number of items produced per seed planted for each plant type:( (Average Number of Items = Total Amount Picked / Total Seeds Planted.)
+
+select c.name,(sum(b.amount)/sum(a.seeds))  as " Average Number Of items" from planted a join picked b on a.plantFK=b.plantFK join plant c on c.plantid=b.plantFK group by  a.plantFK,c.name;
+
+8.Write a valid SQL statement that would produce a result set like the following:
+
+select a.name,b.name,b.date1,c.amount from gardener a inner join picked c on g.gardenerid=c.gardenerfk  join plant b on b.plantid=c.plantfk 
+	where (a.name='Tim' and (b.name='Carrot' or b.name='Radish')) order by c.amount;
+ 
+
+9.Find out persons who picked from the same location as he/she planted.
+
+select distinct(a.name) from gardener a  join planted b on a.gardenerid=b.gardenerfk inner join picked c on a.gardenerid=c.gardenerfk 
+	where c.locationfk=b.locationfk; 
+
+
