@@ -1,0 +1,155 @@
+--ProblemSet4,August 25,2018--
+--submitted by <swathi.b.surseh@accenture.com>
+
+1.Find the names of all students who are friends with someone named Gabriel. (1 point possible)
+ select name,id2 from highschooler h join friend f on f.id1=h.id where id2 in (select id from highschooler where name ='gabriel');
++-----------+------+
+| name      | id2  |
++-----------+------+
+| Jordan    | 1689 |
+| Alexis    | 1911 |
+| Cassandra | 1689 |
+| Andrew    | 1689 |
+| Jessica   | 1911 |
++-----------+------+
+
+2.For every student who likes someone 2 or more grades younger than themselves, return that student's name and grade, and the name and grade of the student they like. (1 point possible)
+ select h1.name,h1.grade,h2.name,h2.grade from highschooler h1 join likes l on l.id1=h1.id join highschooler h2 on l.id2=h2.id where (h1.grade - h2.grade)>1;
++------+-------+-------+-------+
+| name | grade | name  | grade |
++------+-------+-------+-------+
+| John |    12 | Haley |    10 |
++------+-------+-------+-------+
+1 row in set (0.01 sec)
+
+
+3.For every pair of students who both like each other, return the name and grade of both students. Include each pair only once, with the two names in alphabetical order. (1 point possible)
+ select h1.name,h1.grade ,h2.name,h2.grade from highschooler h1 join likes l on h1.id=l.id1 join highschooler h2 on h2.id=l.id2 join likes l2 on l.id1=l2.id2 and l.id2=l2.id1;
++-----------+-------+-----------+-------+
+| name      | grade | name      | grade |
++-----------+-------+-----------+-------+
+| Cassandra |     9 | Gabriel   |     9 |
+| Gabriel   |     9 | Cassandra |     9 |
+| Kyle      |    12 | Jessica   |    11 |
+| Jessica   |    11 | Kyle      |    12 |
++-----------+-------+-----------+-------+
+
+4.Find all students who do not appear in the Likes table (as a student who likes or is liked) and return their names and grades. Sort by grade, then by name within each grade. (1 point possible)
+ select name,grade from highschooler where id not in (select id1 from likes union (select id2 from likes ));
++---------+-------+
+| name    | grade |
++---------+-------+
+| Tiffany |     9 |
+| Jordan  |     9 |
+| Logan   |    12 |
++---------+-------+
+3 rows in set (0.03 sec)
+
+5.For every situation where student A likes student B, but we have no information about whom B likes (that is, B does not appear as an ID1 in the Likes table), return A and B's names and grades. (1 point possible)
+ select h.name,h.grade,h2.name,h2.grade from highschooler h inner join likes l on l.id1=h.id join highschooler h2 on h2.id=l.id2 where id2 not in (select id1 from likes);
++----------+-------+--------+-------+
+| name     | grade | name   | grade |
++----------+-------+--------+-------+
+| Alexis   |    11 | Kris   |    10 |
+| Brittany |    10 | Kris   |    10 |
+| Austin   |    11 | Jordan |    12 |
+| John     |    12 | Haley  |    10 |
++----------+-------+--------+-------+
+
+
+6.Find names and grades of students who only have friends in the same grade. Return the result sorted by grade, then by name within each grade. (1 point possible)
+ select h1.name,h1.grade,h2.name,h2.grade from highschooler h1 join friend f on h1.id=f.id1 join highschooler h2 on h2.id=f.id2 and h1.grade=h2.grade and h1.ID<h2.ID;
++---------+-------+-----------+-------+
+| name    | grade | name      | grade |
++---------+-------+-----------+-------+
+| Jordan  |     9 | Gabriel   |     9 |
+| Gabriel |     9 | Cassandra |     9 |
+| Kris    |    10 | Brittany  |    10 |
+| Haley   |    10 | Brittany  |    10 |
+| Alexis  |    11 | Gabriel   |    11 |
+| Alexis  |    11 | Jessica   |    11 |
+| Jordan  |    12 | Logan     |    12 |
+| Tiffany |     9 | Jordan    |     9 |
+| Kris    |    10 | Andrew    |    10 |
+| Haley   |    10 | Kris      |    10 |
+| Jessica |    11 | Gabriel   |    11 |
+| Jordan  |    12 | Kyle      |    12 |
+| John    |    12 | Logan     |    12 |
++---------+-------+-----------+-------+
+
+7.For each student A who likes a student B where the two are not friends, find if they have a friend C in common (who can introduce them!). For all such trios, return the name and grade of A, B, and C. (1 point possible)
+select h1.name,h1.grade,h2.name,h2.grade,h3.name,h3.grade from highschooler h1 join likes l1 on l1.id1=h1.id join highschooler h2 on l1.id2=h2.id join friend f1 on f1.id1=h1.id join friend f2 on f2.id2=h2.id join highschooler h3 on h3.id=f2.id1 where l1.id1=f1.id1 and l1.id2<>f1.id2 and f1.id2=f2.id1;
++----------+-------+-----------+-------+---------+-------+
+| name     | grade | name      | grade | name    | grade |
++----------+-------+-----------+-------+---------+-------+
+| Andrew   |    10 | Cassandra |     9 | Gabriel |     9 |
+| Austin   |    11 | Jordan    |    12 | Andrew  |    10 |
+| Austin   |    11 | Jordan    |    12 | Kyle    |    12 |
+| Brittany |    10 | Kris      |    10 | Haley   |    10 |
+| Gabriel  |    11 | Alexis    |    11 | Jessica |    11 |
++----------+-------+-----------+-------+---------+-------+
+
+8.Find the difference between the number of students in the school and the number of different first names. (1 point possible)
+select(select count(id) from highschooler)-(select count(distinct(name)) from highschooler) as difference;
+
+
+9.Find the name and grade of all students who are liked by more than one other student. (1 point possible)
+ select count(id2) as c1,id2,name,grade from likes l join highschooler h on l.id2=h.id group by id2 having c1>1 ;
++----+------+-----------+-------+
+| c1 | id2  | name      | grade |
++----+------+-----------+-------+
+|  2 | 1468 | Kris      |    10 |
+|  2 | 1709 | Cassandra |     9 |
++----+------+-----------+-------+
+
+10.For every situation where student A likes student B, but student B likes a different student C, return the names and grades of A, B, and C. (1 point possible)
+select l1.id1,l1.id2,l2.id2,name,grade from likes l1 join likes l2 on l1.id2=l2.id1 and l1.id1<>l2.id2 join highschooler h on h.id=l1.id1;
++------+------+------+---------+-------+
+| id1  | id2  | id2  | name    | grade |
++------+------+------+---------+-------+
+| 1782 | 1709 | 1689 | Andrew  |    10 |
+| 1911 | 1247 | 1468 | Gabriel |    11 |
++------+------+------+---------+-------+
+
+
+11.Find those students for whom all of their friends are in different grades from themselves. Return the students' names and grades.(1 point possible)
+select h1.name,h1.grade,h2.name,h2.grade from highschooler h1 join friend f on h1.id=f.id1 join highschooler h2 on h2.id=f.id2 and h1.grade<>h2.grade and h1.ID<h2.ID;
++---------+-------+-----------+-------+
+| name    | grade | name      | grade |
++---------+-------+-----------+-------+
+| Gabriel |     9 | Andrew    |    10 |
+| Jessica |    11 | Kyle      |    12 |
+| Austin  |    11 | Kyle      |    12 |
+| Alexis  |    11 | Tiffany   |     9 |
+| Alexis  |    11 | Cassandra |     9 |
+| Austin  |    11 | Andrew    |    10 |
+| Jordan  |    12 | Andrew    |    10 |
++---------+-------+-----------+-------+
+
+12.What is the average number of friends per student? (Your result should be just one number.) (1 point possible)
+ select avg(c1) as average from(select id1,count(id1) as c1 from friend group by id1 order by c1)as a;
++---------+
+| average |
++---------+
+|  2.5000 |
++---------+
+
+13.Find the number of students who are either friends with Cassandra or are friends of friends of Cassandra. Do not count Cassandra, even though technically she is a friend of a friend.
+select count(*) from (select id1 from friend where id1 not in(select id from highschooler where name='cassandra') and id2 in (select id1 from friend where id2 in(select id from highschooler where name='cassandra'))union select id1 from friend where id2 in(select id from highschooler where name='cassandra'))as a;
++----------+
+| count(*) |
++----------+
+|        7 |
++----------+
+
+
+14.Find the name and grade of the student(s) with the greatest number of friends. (1 point possible)
+select name, grade,id1 from highschooler h join friend f on f.id1=h.id  group by id1 having count(id1)= (select max(c1) as max from(select id1,count(id1) as c1 from friend group by id1 order by c1)as a);
++--------+-------+------+
+| name   | grade | id1  |
++--------+-------+------+
+| Alexis |    11 | 1247 |
+| Andrew |    10 | 1782 |
++--------+-------+------+
+
+
