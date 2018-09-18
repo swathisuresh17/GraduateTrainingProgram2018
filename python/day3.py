@@ -1,3 +1,6 @@
+<Problem set 03> Sep 10,2018
+ Submitted by swathi.b.suresh
+
 /*1.Given the following dictionary:
       inventory = {
                    'gold' : 500,
