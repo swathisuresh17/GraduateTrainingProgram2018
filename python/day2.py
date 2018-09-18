@@ -1,10 +1,14 @@
+
+--ProblemSet2,september 3 2018
+--Submission by<swathi.b.suresh@accenture.com>
+
 /*1.get first name and last name from user and print your full name */
 
 a=raw_input("enter your first name")
 b=raw_input("enter your last name")
 print("Full Name : %s%s"%(a,b))  
 
-/* get ur full name, age as input from user and print first name and last name , age using string slicing*/
+/*2.get ur full name, age as input from user and print first name and last name , age using string slicing*/
 
 a=raw_input("enter your full name ")
 b=raw_input("enter your age")
